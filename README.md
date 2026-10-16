@@ -25,8 +25,10 @@
 最新安装包位于 [GitHub Releases](https://github.com/galaxywk223/suxia/releases/latest)：
 
 ```text
-Suxia-Setup-1.2.2.exe
+Suxia-Setup-1.2.3.exe
 ```
+
+`v1.2.3` 将产品品牌重命名为素匣（suxia），并更新应用图标与主色。
 
 `v1.2.2` 修复音频提取临时文件扩展名导致 FFmpeg 无法识别 MP3 输出格式的问题。
 
