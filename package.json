@@ -1,17 +1,17 @@
 {
-  "name": "original-media-library",
+  "name": "suxia",
   "version": "1.2.2",
   "private": false,
-  "description": "Windows 本地抖音素材下载与管理工具",
+  "description": "素匣 — Windows 本地抖音素材下载与管理工具",
   "author": "Wang Kai",
   "license": "MIT",
-  "homepage": "https://github.com/galaxywk223/original-media-library#readme",
+  "homepage": "https://github.com/galaxywk223/suxia#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/galaxywk223/original-media-library.git"
+    "url": "git+https://github.com/galaxywk223/suxia.git"
   },
   "bugs": {
-    "url": "https://github.com/galaxywk223/original-media-library/issues"
+    "url": "https://github.com/galaxywk223/suxia/issues"
   },
   "engines": {
     "node": ">=22.12.0",
@@ -77,8 +77,8 @@
   },
   "build": {
     "appId": "com.galaxywk.originalmedialibrary",
-    "productName": "素材下载器",
-    "artifactName": "MediaDownloader-Setup-${version}.${ext}",
+    "productName": "素匣",
+    "artifactName": "Suxia-Setup-${version}.${ext}",
     "asar": true,
     "directories": {
       "output": "release",
@@ -114,7 +114,7 @@
       {
         "provider": "github",
         "owner": "galaxywk223",
-        "repo": "original-media-library"
+        "repo": "suxia"
       }
     ]
   }

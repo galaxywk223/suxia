@@ -1,10 +1,10 @@
-# 素材下载器
+# 素匣
 
-[![CI](https://github.com/galaxywk223/original-media-library/actions/workflows/ci.yml/badge.svg)](https://github.com/galaxywk223/original-media-library/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/galaxywk223/original-media-library)](https://github.com/galaxywk223/original-media-library/releases/latest)
-[![License](https://img.shields.io/github/license/galaxywk223/original-media-library)](LICENSE)
+[![CI](https://github.com/galaxywk223/suxia/actions/workflows/ci.yml/badge.svg)](https://github.com/galaxywk223/suxia/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/galaxywk223/suxia)](https://github.com/galaxywk223/suxia/releases/latest)
+[![License](https://img.shields.io/github/license/galaxywk223/suxia)](LICENSE)
 
-素材下载器是面向 Windows 10/11 x64 的本地抖音素材下载与管理工具。应用使用独立 Edge/Chrome 配置保存登录状态，通过 Electron 桌面界面管理下载任务、图片作品、视频文件和音频文件。
+素匣是面向 Windows 10/11 x64 的本地抖音素材下载与管理工具。应用使用独立 Edge/Chrome 配置保存登录状态，通过 Electron 桌面界面管理下载任务、图片作品、视频文件和音频文件。
 
 ![下载界面](docs/screenshots/download.png)
 
@@ -22,10 +22,10 @@
 
 ## 安装
 
-最新安装包位于 [GitHub Releases](https://github.com/galaxywk223/original-media-library/releases/latest)：
+最新安装包位于 [GitHub Releases](https://github.com/galaxywk223/suxia/releases/latest)：
 
 ```text
-MediaDownloader-Setup-1.2.2.exe
+Suxia-Setup-1.2.2.exe
 ```
 
 `v1.2.2` 修复音频提取临时文件扩展名导致 FFmpeg 无法识别 MP3 输出格式的问题。
@@ -55,9 +55,9 @@ MediaDownloader-Setup-1.2.2.exe
 | `%LOCALAPPDATA%\OriginalMediaLibrary\library.db` | SQLite 数据库 |
 | `%LOCALAPPDATA%\OriginalMediaLibrary\thumbnails` | 缩略图缓存 |
 | `%LOCALAPPDATA%\OriginalMediaLibrary\browser-profile` | 独立浏览器登录环境 |
-| `%USERPROFILE%\Downloads\素材下载器` | 新安装的默认下载目录 |
+| `%USERPROFILE%\Downloads\素匣` | 新安装的默认下载目录 |
 
-旧版 Web 应用的工作区数据在开发模式首次启动时自动迁移到本地应用数据目录。已有安装继续使用数据库中保存的下载目录，新安装默认使用“素材下载器”目录。下载目录可在设置页修改。
+旧版 Web 应用的工作区数据在开发模式首次启动时自动迁移到本地应用数据目录。已有安装继续使用数据库中保存的下载目录，新安装默认使用“素匣”目录。下载目录可在设置页修改。
 
 ## 开发
 

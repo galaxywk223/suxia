@@ -29,10 +29,10 @@ function fakeChild(exitCode: number, outputPath: string, stderrText = ''): Child
 
 describe('AudioExtractor', () => {
   test('resolves packaged FFmpeg from app.asar.unpacked', async () => {
-    expect(resolveFfmpegPath('C:\\Program Files\\original-media-library\\resources\\app.asar\\node_modules\\ffmpeg.exe'))
-      .toBe('C:\\Program Files\\original-media-library\\resources\\app.asar.unpacked\\node_modules\\ffmpeg.exe')
-    expect(resolveFfmpegPath('C:/Program Files/original-media-library/resources/app.asar/node_modules/ffmpeg.exe'))
-      .toBe('C:/Program Files/original-media-library/resources/app.asar.unpacked/node_modules/ffmpeg.exe')
+    expect(resolveFfmpegPath('C:\\Program Files\\suxia\\resources\\app.asar\\node_modules\\ffmpeg.exe'))
+      .toBe('C:\\Program Files\\suxia\\resources\\app.asar.unpacked\\node_modules\\ffmpeg.exe')
+    expect(resolveFfmpegPath('C:/Program Files/suxia/resources/app.asar/node_modules/ffmpeg.exe'))
+      .toBe('C:/Program Files/suxia/resources/app.asar.unpacked/node_modules/ffmpeg.exe')
     expect(resolveFfmpegPath('D:\\Code\\Apps\\video-downloader\\node_modules\\ffmpeg.exe'))
       .toBe('D:\\Code\\Apps\\video-downloader\\node_modules\\ffmpeg.exe')
   })

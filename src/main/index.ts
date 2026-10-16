@@ -30,7 +30,7 @@ function shutdown(): Promise<void> {
 
 async function createWindow(): Promise<BrowserWindow> {
   const window = new BrowserWindow({
-    title: '素材下载器',
+    title: '素匣',
     width: 1280,
     height: 800,
     minWidth: 960,
@@ -51,7 +51,7 @@ async function createWindow(): Promise<BrowserWindow> {
   window.on('close', (event) => {
     if (quitting || !services?.jobs.hasActive()) return
     const choice = dialog.showMessageBoxSync(window, {
-      type: 'warning', title: '退出素材下载器', message: '当前仍有下载任务',
+      type: 'warning', title: '退出素匣', message: '当前仍有下载任务',
       detail: '退出后未完成任务将标记为中断，可在下次启动后重试。',
       buttons: ['继续下载', '退出应用'], defaultId: 0, cancelId: 0,
     })
@@ -86,7 +86,7 @@ async function promptForDownloadedUpdate(version: string | null): Promise<void> 
   const result = await dialog.showMessageBox(mainWindow, {
     type: 'info',
     title: '更新已下载',
-    message: version ? `素材下载器 v${version} 已准备就绪` : '新版素材下载器已准备就绪',
+    message: version ? `素匣 v${version} 已准备就绪` : '新版素匣已准备就绪',
     detail: '重启应用后完成更新安装。',
     buttons: ['稍后', '重启更新'],
     defaultId: 1,
@@ -145,7 +145,7 @@ if (!hasLock) {
     mainWindow.focus()
   })
   app.whenReady().then(start).catch((error) => {
-    dialog.showErrorBox('素材下载器启动失败', error instanceof Error ? error.message : String(error))
+    dialog.showErrorBox('素匣启动失败', error instanceof Error ? error.message : String(error))
     app.exit(1)
   })
   app.on('activate', () => {

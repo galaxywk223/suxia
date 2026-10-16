@@ -23,8 +23,8 @@ test('desktop shell renders and navigates to the empty library', async () => {
   })
   try {
     const window = await application.firstWindow()
-    await expect(window).toHaveTitle('素材下载器')
-    await expect(window.getByLabel('素材下载器')).toBeVisible()
+    await expect(window).toHaveTitle('素匣')
+    await expect(window.getByLabel('素匣')).toBeVisible()
     await expect(window.getByRole('heading', { name: '粘贴分享内容' })).toBeVisible()
     await window.getByRole('button', { name: '媒体库' }).click()
     await expect(window.getByRole('heading', { name: '媒体库', exact: true })).toBeVisible()

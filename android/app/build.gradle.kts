@@ -47,7 +47,7 @@ android {
 android.applicationVariants.all {
     outputs.all {
         @Suppress("UnstableApiUsage")
-        (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = if (name.contains("debug")) "MediaDownloader-Android-1.0.0-debug.apk" else "MediaDownloader-Android-1.0.0.apk"
+        (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = if (name.contains("debug")) "Suxia-Android-1.0.0-debug.apk" else "Suxia-Android-1.0.0.apk"
     }
 }
 

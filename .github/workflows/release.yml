@@ -24,6 +24,6 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            release/MediaDownloader-Setup-*.exe
-            release/MediaDownloader-Setup-*.exe.blockmap
+            release/Suxia-Setup-*.exe
+            release/Suxia-Setup-*.exe.blockmap
             release/latest.yml

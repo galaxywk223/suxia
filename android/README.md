@@ -1,4 +1,4 @@
-# Android 素材下载器
+# Android 素匣
 
 独立 Android 客户端，最低支持 Android 8.0（API 26）。客户端使用应用内 WebView 保存抖音登录状态，使用 WorkManager 执行下载和音频提取任务，Room 保存本地媒体库。内置 FFmpegKit/LAME 从视频生成 MP3，固定码率为 192 kbps。
 
@@ -27,7 +27,7 @@ bash android/scripts/build-ffmpeg.sh
 .\gradlew.bat assembleRelease
 ```
 
-签名发布构建通过 `keystore.properties` 或 GitHub Actions Secrets 提供，签名文件不进入仓库。`keystore.properties` 需要包含 `storeFile`、`storePassword`、`keyAlias` 和 `keyPassword`。debug APK 名称为 `MediaDownloader-Android-1.0.0-debug.apk`，release APK 名称为 `MediaDownloader-Android-1.0.0.apk`。
+签名发布构建通过 `keystore.properties` 或 GitHub Actions Secrets 提供，签名文件不进入仓库。`keystore.properties` 需要包含 `storeFile`、`storePassword`、`keyAlias` 和 `keyPassword`。debug APK 名称为 `Suxia-Android-1.0.0-debug.apk`，release APK 名称为 `Suxia-Android-1.0.0.apk`。
 
 `assembleDebug` 使用 Android 调试签名；`assembleRelease` 在配置发布密钥后生成正式签名 APK。缺少密钥时输出未签名 release APK，不能直接安装。发布后的应用更新必须使用同一签名密钥，密钥及配置需要单独备份。
 
