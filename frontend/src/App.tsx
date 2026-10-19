@@ -14,6 +14,12 @@ const pageTitles: Record<PageId, string> = {
   tasks: '任务',
 }
 
+const pageSubtitles: Record<PageId, string> = {
+  download: '粘贴分享链接，把喜欢的作品原样收进本地',
+  library: '本地收藏的图片、视频与音频',
+  tasks: '下载队列与最近任务',
+}
+
 function initialPage(): PageId {
   const value = window.location.hash.replace('#/', '')
   return value === 'library' || value === 'tasks' ? value : 'download'
@@ -50,6 +56,7 @@ export default function App() {
     <AppShell
       page={page}
       title={pageTitles[page]}
+      subtitle={pageSubtitles[page]}
       settings={settings.data}
       onPageChange={changePage}
       onOpenSettings={() => { setSetupDismissed(false); setSettingsOpen(true) }}

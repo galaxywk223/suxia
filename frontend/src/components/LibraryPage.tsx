@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AudioLines, Check, Grid2X2, Images, LayoutList, Play, RefreshCw, Search, Trash2, X } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 import { api } from '../api'
+import { formatBytes } from '../format'
 import type { Collection } from '../types'
 import { MediaViewer } from './MediaViewer'
 
@@ -61,6 +62,7 @@ export function LibraryPage() {
           <option value="name">名称</option>
           <option value="size">文件数量</option>
         </select>
+        <span className="toolbar-spacer" />
         <div className="view-toggle">
           <button className={view === 'grid' ? 'is-active' : ''} onClick={() => setView('grid')} type="button" aria-label="网格视图"><Grid2X2 size={17} /></button>
           <button className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} type="button" aria-label="列表视图"><LayoutList size={18} /></button>
@@ -77,8 +79,8 @@ export function LibraryPage() {
 
       {library.error ? <p className="inline-error">{library.error.message}</p> : null}
       {!library.isLoading && !library.data?.items.length ? (
-        <div className="empty-state library-empty">
-          <Images size={30} />
+        <div className="card empty-state library-empty">
+          <span className="empty-icon"><Images size={28} /></span>
           <h2>{search ? '没有匹配的媒体' : '媒体库为空'}</h2>
           <p>{search ? '调整搜索或筛选条件' : '下载或放入文件后重新扫描'}</p>
         </div>
@@ -123,13 +125,13 @@ function MediaItem({ item, selected, view, onSelect, onOpen }: MediaItemProps) {
   return (
     <article className={`media-item ${selected ? 'is-selected' : ''}`}>
       <button className="media-preview" onClick={onOpen} type="button" aria-label={`预览 ${item.title}`}>
-        {item.cover_asset_id ? <img src={`oml-media://asset/${item.cover_asset_id}/thumbnail`} alt="" loading="lazy" /> : <span><Images /></span>}
-        {item.media_type === 'video' || item.media_type === 'mixed' ? <i className="play-indicator"><Play size={16} fill="currentColor" /></i> : null}
-        {item.media_type === 'audio' ? <i className="play-indicator"><AudioLines size={16} /></i> : null}
-        {item.item_count > 1 ? <span className="item-count"><Images size={13} />{item.item_count}</span> : null}
+        {item.cover_asset_id ? <img src={`oml-media://asset/${item.cover_asset_id}/thumbnail`} alt="" loading="lazy" /> : <span><Images size={28} /></span>}
+        {item.media_type === 'video' || item.media_type === 'mixed' ? <i className="play-indicator"><Play size={13} fill="currentColor" /></i> : null}
+        {item.media_type === 'audio' ? <i className="play-indicator"><AudioLines size={14} /></i> : null}
+        {item.item_count > 1 ? <span className="item-count"><Images size={12} />{item.item_count}</span> : null}
       </button>
       <button className="item-selector" onClick={onSelect} type="button" aria-label={selected ? '取消选择' : '选择'}>
-        {selected ? <Check size={14} /> : null}
+        {selected ? <Check size={14} strokeWidth={3} /> : null}
       </button>
       <div className="media-caption" onClick={onOpen} role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === 'Enter') onOpen() }}>
         <strong title={item.title}>{item.title}</strong>
@@ -140,9 +142,3 @@ function MediaItem({ item, selected, view, onSelect, onOpen }: MediaItemProps) {
   )
 }
 
-function formatBytes(bytes: number) {
-  if (!bytes) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB']
-  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  return `${(bytes / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`
-}

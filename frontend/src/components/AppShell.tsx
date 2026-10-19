@@ -1,5 +1,5 @@
 import * as Tooltip from '@radix-ui/react-tooltip'
-import { Download, FolderCog, Images, ListChecks, Settings as SettingsIcon } from 'lucide-react'
+import { Download, FolderOpen, Images, ListChecks, Settings as SettingsIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import brandMark from '../assets/brand-mark.svg'
 import type { PageId, Settings } from '../types'
@@ -13,6 +13,7 @@ const pages: Array<{ id: PageId; label: string; icon: typeof Download }> = [
 interface AppShellProps {
   page: PageId
   title: string
+  subtitle: string
   settings?: Settings
   onPageChange: (page: PageId) => void
   onOpenSettings: () => void
@@ -22,18 +23,20 @@ interface AppShellProps {
 export function AppShell({
   page,
   title,
+  subtitle,
   settings,
   onPageChange,
   onOpenSettings,
   children,
 }: AppShellProps) {
+  const folderName = settings?.download_dir?.split(/[\\/]/).filter(Boolean).pop()
   return (
     <Tooltip.Provider delayDuration={500}>
       <div className="app-shell">
         <aside className="sidebar">
           <div className="brand" aria-label="Keepsake">
-            <span className="brand-mark"><img src={brandMark} alt="" width={30} height={30} /></span>
-            <span>Keepsake</span>
+            <img className="brand-mark" src={brandMark} alt="" width={32} height={32} />
+            <span className="brand-name">Keepsake</span>
           </div>
           <nav className="primary-nav" aria-label="主导航">
             {pages.map(({ id, label, icon: Icon }) => (
@@ -42,40 +45,49 @@ export function AppShell({
                 key={id}
                 onClick={() => onPageChange(id)}
                 type="button"
+                aria-current={page === id ? 'page' : undefined}
               >
                 <Icon size={18} />
                 <span>{label}</span>
               </button>
             ))}
           </nav>
-          <button className="nav-item settings-nav" onClick={onOpenSettings} type="button">
-            <SettingsIcon size={18} />
-            <span>设置</span>
-          </button>
+          <div className="sidebar-footer">
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <button className="status-card" onClick={onOpenSettings} type="button">
+                  <span className="status-line">
+                    <FolderOpen size={15} />
+                    <strong>{folderName || '未设置下载目录'}</strong>
+                  </span>
+                  <span className="status-line">
+                    <span className={`status-dot ${settings?.browser_profile_ready ? 'is-ready' : ''}`} aria-hidden="true" />
+                    {settings?.browser_profile_ready ? '登录环境已配置' : '未配置登录环境'}
+                  </span>
+                </button>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content className="tooltip" side="right" sideOffset={10}>
+                  {settings?.download_dir || '查看下载目录'}
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+            <button className="nav-item" onClick={onOpenSettings} type="button">
+              <SettingsIcon size={18} />
+              <span>设置</span>
+            </button>
+          </div>
         </aside>
 
         <main className="main-area">
-          <header className="topbar">
-            <h1>{title}</h1>
-            <div className="topbar-actions">
-              <Tooltip.Root>
-                <Tooltip.Trigger asChild>
-                  <button className="path-indicator" onClick={onOpenSettings} type="button">
-                    <FolderCog size={16} />
-                    <span>{settings?.download_dir?.split(/[\\/]/).pop() || '下载目录'}</span>
-                  </button>
-                </Tooltip.Trigger>
-                <Tooltip.Portal>
-                  <Tooltip.Content className="tooltip" sideOffset={8}>
-                    {settings?.download_dir || '查看下载目录'}
-                  </Tooltip.Content>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-              <span className={`connection-state ${settings?.browser_profile_ready ? 'is-ready' : ''}`}>
-                <span aria-hidden="true" />
-                {settings?.browser_profile_ready ? '登录环境已配置' : '未配置登录环境'}
-              </span>
+          <header className="page-header">
+            <div>
+              <h1>{title}</h1>
+              <p>{subtitle}</p>
             </div>
+            <button className="icon-button bordered mobile-settings" onClick={onOpenSettings} type="button" aria-label="打开设置">
+              <SettingsIcon size={18} />
+            </button>
           </header>
           <div className="page-content">{children}</div>
         </main>

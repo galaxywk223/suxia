@@ -35,7 +35,7 @@ async function createWindow(): Promise<BrowserWindow> {
     height: 800,
     minWidth: 960,
     minHeight: 640,
-    backgroundColor: '#f4f5f7',
+    backgroundColor: '#0e0f12',
     show: false,
     webPreferences: {
       preload: join(__dirname, '../preload/index.cjs'),

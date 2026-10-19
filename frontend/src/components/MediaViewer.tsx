@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AudioLines, ChevronLeft, ChevronRight, ExternalLink, FolderOpen, Pencil, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../api'
+import { formatBytes } from '../format'
 
 interface MediaViewerProps {
   collectionId: string | null
@@ -137,9 +138,3 @@ export function MediaViewer({ collectionId, onClose }: MediaViewerProps) {
   )
 }
 
-function formatBytes(bytes: number) {
-  const units = ['B', 'KB', 'MB', 'GB']
-  if (!bytes) return '0 B'
-  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  return `${(bytes / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`
-}

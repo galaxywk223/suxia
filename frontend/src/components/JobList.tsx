@@ -1,4 +1,5 @@
-import { AlertCircle, CheckCircle2, CircleX, LoaderCircle, RefreshCw, Square } from 'lucide-react'
+import { AlertCircle, CheckCircle2, CircleX, Inbox, LoaderCircle, RefreshCw, Square } from 'lucide-react'
+import { formatBytes } from '../format'
 import type { Job } from '../types'
 
 const statusLabels: Record<string, string> = {
@@ -11,13 +12,6 @@ const statusLabels: Record<string, string> = {
   interrupted: '已中断',
 }
 
-function formatBytes(bytes: number) {
-  if (!bytes) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB']
-  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  return `${(bytes / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`
-}
-
 interface JobListProps {
   jobs: Job[]
   compact?: boolean
@@ -28,8 +22,8 @@ interface JobListProps {
 export function JobList({ jobs, compact = false, onCancel, onRetry }: JobListProps) {
   if (!jobs.length) {
     return (
-      <div className="empty-state compact-empty">
-        <LoaderCircle size={23} />
+      <div className={`empty-state ${compact ? 'compact-empty' : ''}`}>
+        <span className="empty-icon"><Inbox size={26} /></span>
         <p>暂无下载任务</p>
       </div>
     )
@@ -52,7 +46,7 @@ export function JobList({ jobs, compact = false, onCancel, onRetry }: JobListPro
             <div className="job-main">
               <div className="job-title-line">
                 <strong title={title}>{title}</strong>
-                <span>{statusLabels[job.status] || job.status}</span>
+                <span className={`status-chip status-${job.status}`}>{statusLabels[job.status] || job.status}</span>
               </div>
               {active ? (
                 <>

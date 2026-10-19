@@ -1,8 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { CheckCircle2, DownloadCloud, FolderCog, FolderOpen, LogIn, RefreshCw, X } from 'lucide-react'
+import { CheckCircle2, DownloadCloud, FolderCog, FolderOpen, Globe, LogIn, RefreshCw, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import { readThemePreference, saveThemePreference, type ThemePreference } from '../theme'
 import type { Settings, UpdateStatus } from '../types'
 
 interface SettingsDialogProps {
@@ -14,6 +15,7 @@ interface SettingsDialogProps {
 export function SettingsDialog({ open, settings, onOpenChange }: SettingsDialogProps) {
   const queryClient = useQueryClient()
   const [downloadDir, setDownloadDir] = useState(settings?.download_dir ?? '')
+  const [theme, setTheme] = useState<ThemePreference>(readThemePreference)
 
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ['settings'] })
@@ -62,78 +64,120 @@ export function SettingsDialog({ open, settings, onOpenChange }: SettingsDialogP
           <div className="dialog-heading">
             <div>
               <Dialog.Title>设置</Dialog.Title>
-              <Dialog.Description>本机下载目录与媒体处理状态</Dialog.Description>
+              <Dialog.Description>下载目录、登录环境、外观与更新</Dialog.Description>
             </div>
             <Dialog.Close className="icon-button" aria-label="关闭"><X size={19} /></Dialog.Close>
           </div>
 
-          <div className="settings-section">
-            <label htmlFor="download-dir">下载目录</label>
-            <div className="field-with-action">
-              <input
-                id="download-dir"
-                value={downloadDir}
-                onChange={(event) => setDownloadDir(event.target.value)}
-              />
-              <button className="icon-button bordered" onClick={() => choose.mutate()} type="button" aria-label="选择目录">
-                <FolderOpen size={18} />
-              </button>
-            </div>
-            <div className="settings-actions">
-              <button className="secondary-button" onClick={() => rescan.mutate()} type="button">
-                <RefreshCw size={16} />重新扫描
-              </button>
-              <button className="primary-button" disabled={!downloadDir || save.isPending} onClick={() => save.mutate()} type="button">
-                保存
-              </button>
-            </div>
-          </div>
+          <div className="settings-body">
+            <div className="settings-column">
+              <section className="settings-group">
+                <h3 className="eyebrow">存储</h3>
+                <div className="settings-panel">
+                  <div className="settings-field">
+                    <label htmlFor="download-dir">下载目录</label>
+                    <div className="field-with-action">
+                      <input
+                        id="download-dir"
+                        value={downloadDir}
+                        onChange={(event) => setDownloadDir(event.target.value)}
+                      />
+                      <button className="icon-button bordered" onClick={() => choose.mutate()} type="button" aria-label="选择目录">
+                        <FolderOpen size={18} />
+                      </button>
+                    </div>
+                    <div className="settings-actions">
+                      <button className="secondary-button" onClick={() => rescan.mutate()} type="button">
+                        <RefreshCw size={16} />重新扫描
+                      </button>
+                      <button className="primary-button" disabled={!downloadDir || save.isPending} onClick={() => save.mutate()} type="button">
+                        保存
+                      </button>
+                    </div>
+                  </div>
+                  <div className="settings-row">
+                    <FolderCog size={18} className="muted" />
+                    <span>应用数据</span>
+                    <button className="text-button" onClick={() => openData.mutate()} type="button">打开目录</button>
+                  </div>
+                </div>
+              </section>
 
-          <div className="capability-list">
-            <div>
-              <CheckCircle2 size={18} className={settings?.browser_profile_ready ? 'success' : 'muted'} />
-              <span>抖音登录环境</span>
-              <strong>{settings?.browser_profile_ready ? '已配置' : '未配置'}</strong>
+              <section className="settings-group">
+                <h3 className="eyebrow">登录环境</h3>
+                <div className="settings-panel">
+                  <div className="settings-row">
+                    <CheckCircle2 size={18} className={settings?.browser_profile_ready ? 'success' : 'muted'} />
+                    <span>抖音登录环境</span>
+                    <strong>{settings?.browser_profile_ready ? '已配置' : '未配置'}</strong>
+                  </div>
+                  <div className="settings-row">
+                    <Globe size={18} className={settings?.browser_ready ? 'success' : 'muted'} />
+                    <span>系统浏览器</span>
+                    <strong>{settings?.browser_ready ? '可用' : '未找到'}</strong>
+                  </div>
+                  <div className="settings-row">
+                    <LogIn size={18} className="muted" />
+                    <span><small>使用独立的 Edge / Chrome 配置登录</small></span>
+                    <button className="secondary-button" onClick={() => login.mutate()} disabled={!settings?.browser_ready || login.isPending} type="button">
+                      {settings?.browser_profile_ready ? '重新登录' : '配置登录'}
+                    </button>
+                  </div>
+                </div>
+              </section>
             </div>
-            <div>
-              <CheckCircle2 size={18} className={settings?.browser_ready ? 'success' : 'muted'} />
-              <span>系统浏览器</span>
-              <strong>{settings?.browser_ready ? '可用' : '未找到'}</strong>
+
+            <div className="settings-column">
+              <section className="settings-group">
+                <h3 className="eyebrow">外观</h3>
+                <div className="settings-panel theme-options" role="radiogroup" aria-label="外观">
+                  {([['system', '跟随系统'], ['dark', '深色'], ['light', '浅色']] as const).map(([value, label]) => (
+                    <button
+                      className={`theme-option ${theme === value ? 'is-active' : ''}`}
+                      key={value}
+                      onClick={() => { setTheme(value); saveThemePreference(value) }}
+                      role="radio"
+                      aria-checked={theme === value}
+                      type="button"
+                    >
+                      <span className={`theme-swatch is-${value}`} aria-hidden="true" />
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section className="settings-group">
+                <h3 className="eyebrow">关于</h3>
+                <div className="settings-panel">
+                  <div className="settings-row">
+                    <DownloadCloud size={18} className={updateStatus?.phase === 'downloaded' ? 'success' : 'muted'} />
+                    <span>
+                      <span>应用更新</span>
+                      <small title={updateStatus?.message ?? undefined}>{updateStatusText(updateStatus, settings?.app_version)}</small>
+                      {updateStatus?.phase === 'downloading' ? (
+                        <span className="update-progress" aria-label={`更新下载进度 ${updateStatus.download_percent ?? 0}%`}>
+                          <span style={{ width: `${updateStatus.download_percent ?? 0}%` }} />
+                        </span>
+                      ) : null}
+                    </span>
+                    <button
+                      className="text-button"
+                      onClick={runUpdateAction}
+                      disabled={updateDisabled || updateAction.isPending}
+                      type="button"
+                    >
+                      {updateActionText(updateStatus)}
+                    </button>
+                  </div>
+                </div>
+              </section>
             </div>
-            <div>
-              <FolderCog size={18} className="muted" />
-              <span>应用数据</span>
-              <button className="text-button" onClick={() => openData.mutate()} type="button">打开目录</button>
-            </div>
-            <div className="update-status-row">
-              <DownloadCloud size={18} className={updateStatus?.phase === 'downloaded' ? 'success' : 'muted'} />
-              <span className="update-copy">
-                <span>应用更新</span>
-                <small title={updateStatus?.message ?? undefined}>{updateStatusText(updateStatus, settings?.app_version)}</small>
-                {updateStatus?.phase === 'downloading' ? (
-                  <span className="update-progress" aria-label={`更新下载进度 ${updateStatus.download_percent ?? 0}%`}>
-                    <span style={{ width: `${updateStatus.download_percent ?? 0}%` }} />
-                  </span>
-                ) : null}
-              </span>
-              <button
-                className="text-button update-action"
-                onClick={runUpdateAction}
-                disabled={updateDisabled || updateAction.isPending}
-                type="button"
-              >
-                {updateActionText(updateStatus)}
-              </button>
-            </div>
+
+            {(save.error || choose.error || rescan.error || login.error || openData.error || checkUpdate.error || installUpdate.error) ? (
+              <p className="inline-error">{(save.error || choose.error || rescan.error || login.error || openData.error || checkUpdate.error || installUpdate.error)?.message}</p>
+            ) : null}
           </div>
-          <div className="settings-footer-actions">
-            <button className="secondary-button" onClick={() => login.mutate()} disabled={!settings?.browser_ready || login.isPending} type="button">
-              <LogIn size={16} />{settings?.browser_profile_ready ? '重新登录' : '配置登录'}
-            </button>
-          </div>
-          {(save.error || choose.error || rescan.error || login.error || openData.error || checkUpdate.error || installUpdate.error) ? (
-            <p className="inline-error">{(save.error || choose.error || rescan.error || login.error || openData.error || checkUpdate.error || installUpdate.error)?.message}</p>
-          ) : null}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

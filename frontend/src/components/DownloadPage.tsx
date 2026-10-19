@@ -65,33 +65,40 @@ export function DownloadPage() {
     })
   }
 
+  const canParse = Boolean(text.trim()) && !parse.isPending
+
   return (
     <div className="download-layout">
       <section className="download-workspace">
-        <div className="section-heading">
-          <div>
-            <h2>粘贴分享内容</h2>
-            <p>支持分享文案、短链接和多个抖音作品链接</p>
+        <div className="card composer">
+          <div className="composer-head">
+            <div>
+              <h2>粘贴分享内容</h2>
+              <p>支持分享文案、短链接和多个抖音作品链接</p>
+            </div>
+            <button className="ghost-button" onClick={() => login.mutate()} type="button">
+              <LogIn size={16} />打开登录浏览器
+            </button>
           </div>
-          <button className="secondary-button" onClick={() => login.mutate()} type="button">
-            <LogIn size={16} />打开登录浏览器
-          </button>
-        </div>
-
-        <div className="paste-area">
           <textarea
             aria-label="分享内容"
             placeholder="粘贴抖音分享文本或链接，支持多条"
             value={text}
             onChange={(event) => setText(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && (event.ctrlKey || event.metaKey) && canParse) parse.mutate()
+            }}
           />
-          <div className="paste-actions">
-            <button className="secondary-button" onClick={paste} type="button">
-              <Clipboard size={16} />粘贴
-            </button>
-            <button className="primary-button" disabled={!text.trim() || parse.isPending} onClick={() => parse.mutate()} type="button">
-              <Link2 size={16} />{parse.isPending ? '解析中' : '解析链接'}
-            </button>
+          <div className="composer-foot">
+            <span className="hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> 快速解析</span>
+            <div className="composer-actions">
+              <button className="secondary-button" onClick={paste} type="button">
+                <Clipboard size={16} />粘贴
+              </button>
+              <button className="primary-button" disabled={!canParse} onClick={() => parse.mutate()} type="button">
+                <Link2 size={16} />{parse.isPending ? '解析中' : '解析链接'}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -101,11 +108,11 @@ export function DownloadPage() {
         ) : null}
 
         {sources.length ? (
-          <div className="parsed-section">
+          <div className="card parsed-section">
             <div className="parsed-toolbar">
               <div>
                 <strong>解析结果</strong>
-                <span>{selected.size} 项已选择</span>
+                <span>{selected.size} / {sources.length} 项已选择</span>
               </div>
               <button className="primary-button" disabled={!selected.size || create.isPending} onClick={() => create.mutate({ urls: [...selected], force: false })} type="button">
                 <Download size={16} />开始下载
@@ -119,7 +126,7 @@ export function DownloadPage() {
                   onClick={() => toggle(source.url)}
                   type="button"
                 >
-                  <span className="selection-box">{selected.has(source.url) ? <Check size={14} /> : null}</span>
+                  <span className="selection-box">{selected.has(source.url) ? <Check size={13} strokeWidth={3} /> : null}</span>
                   <span className="source-icon"><Link2 size={18} /></span>
                   <span className="source-info">
                     <strong>{source.aweme_id ? `抖音作品 ${source.aweme_id}` : '抖音分享链接'}</strong>
@@ -146,7 +153,7 @@ export function DownloadPage() {
         ) : null}
       </section>
 
-      <aside className="active-queue">
+      <aside className="card active-queue">
         <div className="rail-heading">
           <div>
             <h2>当前任务</h2>
