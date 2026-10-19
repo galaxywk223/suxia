@@ -1,17 +1,17 @@
 {
-  "name": "suxia",
-  "version": "1.2.3",
+  "name": "keepsake",
+  "version": "1.3.0",
   "private": false,
-  "description": "素匣 — Windows 本地抖音素材下载与管理工具",
+  "description": "Keepsake — Windows 本地抖音素材下载与管理工具",
   "author": "Wang Kai",
   "license": "MIT",
-  "homepage": "https://github.com/galaxywk223/suxia#readme",
+  "homepage": "https://github.com/galaxywk223/keepsake#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/galaxywk223/suxia.git"
+    "url": "git+https://github.com/galaxywk223/keepsake.git"
   },
   "bugs": {
-    "url": "https://github.com/galaxywk223/suxia/issues"
+    "url": "https://github.com/galaxywk223/keepsake/issues"
   },
   "engines": {
     "node": ">=22.12.0",
@@ -77,8 +77,8 @@
   },
   "build": {
     "appId": "com.galaxywk.originalmedialibrary",
-    "productName": "素匣",
-    "artifactName": "Suxia-Setup-${version}.${ext}",
+    "productName": "Keepsake",
+    "artifactName": "Keepsake-Setup-${version}.${ext}",
     "asar": true,
     "directories": {
       "output": "release",
@@ -114,7 +114,7 @@
       {
         "provider": "github",
         "owner": "galaxywk223",
-        "repo": "suxia"
+        "repo": "keepsake"
       }
     ]
   }

@@ -24,6 +24,6 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            release/Suxia-Setup-*.exe
-            release/Suxia-Setup-*.exe.blockmap
+            release/Keepsake-Setup-*.exe
+            release/Keepsake-Setup-*.exe.blockmap
             release/latest.yml

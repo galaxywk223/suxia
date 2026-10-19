@@ -31,9 +31,9 @@ export function AppShell({
     <Tooltip.Provider delayDuration={500}>
       <div className="app-shell">
         <aside className="sidebar">
-          <div className="brand" aria-label="素匣">
+          <div className="brand" aria-label="Keepsake">
             <span className="brand-mark"><img src={brandMark} alt="" width={30} height={30} /></span>
-            <span>素匣</span>
+            <span>Keepsake</span>
           </div>
           <nav className="primary-nav" aria-label="主导航">
             {pages.map(({ id, label, icon: Icon }) => (

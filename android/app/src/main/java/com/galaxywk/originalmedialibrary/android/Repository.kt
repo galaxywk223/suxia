@@ -26,7 +26,7 @@ object JobNotifications {
         val launch = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, "tasks").setSmallIcon(android.R.drawable.stat_sys_download)
-            .setContentTitle("素匣").setContentText(title).setOngoing(true).setContentIntent(launch)
+            .setContentTitle("Keepsake").setContentText(title).setOngoing(true).setContentIntent(launch)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, "取消", cancel).build()
         return if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(jobId.hashCode(), notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
             else ForegroundInfo(jobId.hashCode(), notification)

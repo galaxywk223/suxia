@@ -1,10 +1,10 @@
-# 素匣
+# Keepsake
 
-[![CI](https://github.com/galaxywk223/suxia/actions/workflows/ci.yml/badge.svg)](https://github.com/galaxywk223/suxia/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/galaxywk223/suxia)](https://github.com/galaxywk223/suxia/releases/latest)
-[![License](https://img.shields.io/github/license/galaxywk223/suxia)](LICENSE)
+[![CI](https://github.com/galaxywk223/keepsake/actions/workflows/ci.yml/badge.svg)](https://github.com/galaxywk223/keepsake/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/galaxywk223/keepsake)](https://github.com/galaxywk223/keepsake/releases/latest)
+[![License](https://img.shields.io/github/license/galaxywk223/keepsake)](LICENSE)
 
-素匣是面向 Windows 10/11 x64 的本地抖音素材下载与管理工具。应用使用独立 Edge/Chrome 配置保存登录状态，通过 Electron 桌面界面管理下载任务、图片作品、视频文件和音频文件。
+Keepsake 是面向 Windows 10/11 x64 的本地抖音素材下载与管理工具。应用使用独立 Edge/Chrome 配置保存登录状态，通过 Electron 桌面界面管理下载任务、图片作品、视频文件和音频文件。
 
 ![下载界面](docs/screenshots/download.png)
 
@@ -22,13 +22,15 @@
 
 ## 安装
 
-最新安装包位于 [GitHub Releases](https://github.com/galaxywk223/suxia/releases/latest)：
+最新安装包位于 [GitHub Releases](https://github.com/galaxywk223/keepsake/releases/latest)：
 
 ```text
-Suxia-Setup-1.2.3.exe
+Keepsake-Setup-1.3.0.exe
 ```
 
-`v1.2.3` 将产品品牌重命名为素匣（suxia），并更新应用图标与主色。
+`v1.3.0` 产品更名为 Keepsake，启用新标志、琥珀主色与深色媒体风格界面（外观可选跟随系统、深色或浅色）。
+
+`v1.2.3` 将产品品牌重命名为素匣，并更新应用图标与主色。
 
 `v1.2.2` 修复音频提取临时文件扩展名导致 FFmpeg 无法识别 MP3 输出格式的问题。
 
@@ -57,9 +59,9 @@ Suxia-Setup-1.2.3.exe
 | `%LOCALAPPDATA%\OriginalMediaLibrary\library.db` | SQLite 数据库 |
 | `%LOCALAPPDATA%\OriginalMediaLibrary\thumbnails` | 缩略图缓存 |
 | `%LOCALAPPDATA%\OriginalMediaLibrary\browser-profile` | 独立浏览器登录环境 |
-| `%USERPROFILE%\Downloads\素匣` | 新安装的默认下载目录 |
+| `%USERPROFILE%\Downloads\Keepsake` | 新安装的默认下载目录 |
 
-旧版 Web 应用的工作区数据在开发模式首次启动时自动迁移到本地应用数据目录。已有安装继续使用数据库中保存的下载目录，新安装默认使用“素匣”目录。下载目录可在设置页修改。
+旧版 Web 应用的工作区数据在开发模式首次启动时自动迁移到本地应用数据目录。已有安装继续使用数据库中保存的下载目录，新安装默认使用“Keepsake”目录。下载目录可在设置页修改。
 
 ## 开发
 

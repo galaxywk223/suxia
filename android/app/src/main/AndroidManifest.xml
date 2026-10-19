@@ -6,7 +6,9 @@
     <application
         android:name=".MediaDownloaderApplication"
         android:allowBackup="true"
-        android:label="素匣"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/Theme.MediaDownloader">
         <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:foregroundServiceType="dataSync" android:exported="false" android:directBootAware="false" />
         <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.files" android:exported="false" android:grantUriPermissions="true">
